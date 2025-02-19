@@ -18,10 +18,6 @@
         #define OS "Linux"
     #endif
 
-#include <string>
-#include <iostream>
-#include <vector>
-
 namespace type {
 
     //#define __uint8_t unsigned char
