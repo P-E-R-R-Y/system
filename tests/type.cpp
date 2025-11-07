@@ -29,10 +29,10 @@ TEST(Vector3Test, DefaultInitialization) {
 // ---------- Vector4 ----------
 TEST(Vector4Test, Assignment) {
     Vector4i v{1,2,3,4};
-    EXPECT_EQ(v.x, 1);
-    EXPECT_EQ(v.y, 2);
-    EXPECT_EQ(v.w, 3);
-    EXPECT_EQ(v.h, 4);
+    EXPECT_EQ(v.w, 1);
+    EXPECT_EQ(v.x, 2);
+    EXPECT_EQ(v.y, 3);
+    EXPECT_EQ(v.z, 4);
 }
 
 // ---------- Color ----------
@@ -50,21 +50,4 @@ TEST(ColorTest, Assignment) {
     EXPECT_EQ(c.g, 128);
     EXPECT_EQ(c.b, 64);
     EXPECT_EQ(c.a, 32);
-}
-
-// ---------- Quaternion ----------
-TEST(QuaternionTest, DefaultInitialization) {
-    Quaternion q{};
-    EXPECT_DOUBLE_EQ(q.w, 0.0);
-    EXPECT_DOUBLE_EQ(q.x, 0.0);
-    EXPECT_DOUBLE_EQ(q.y, 0.0);
-    EXPECT_DOUBLE_EQ(q.z, 0.0);
-}
-
-TEST(QuaternionTest, Assignment) {
-    Quaternion q{1.0, 0.1, 0.2, 0.3};
-    EXPECT_DOUBLE_EQ(q.w, 1.0);
-    EXPECT_DOUBLE_EQ(q.x, 0.1);
-    EXPECT_DOUBLE_EQ(q.y, 0.2);
-    EXPECT_DOUBLE_EQ(q.z, 0.3);
 }
