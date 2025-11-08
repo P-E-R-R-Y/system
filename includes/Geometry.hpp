@@ -21,7 +21,7 @@ struct Line {
 
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
     bool operator==(const Line& other) const {
-        // Edges are undirected: (A,B) == (B,A)
+        // Edges are undirected: (p1,p2) == (p2,p1)
         return (p1 == other.p1 && p2 == other.p2) ||
                 (p1 == other.p2 && p2 == other.p1);
     }
@@ -32,16 +32,16 @@ struct Triangle {
     Vector3<T> p1, p2, p3;
 
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
-    bool circumcircleContains(const Vector2<T>& p) {
+    bool isInsideCircumcircle(const Vector2<T>& p) {
         //p become the origin (0,0)
         Vector2<T> a = {p1.x - p.x, p1.y - p.y};
         Vector2<T> b = {p2.x - p.x, p2.y - p.y};
         Vector2<T> c = {p3.x - p.x, p3.y - p.y};
 
         //geometric condition (squared distances from P to each vertex)
-        T a2 = a.square_magnitude(); // ||A'||^2
-        T b2 = b.square_magnitude(); // ||B'||^2
-        T c2 = c.square_magnitude(); // ||C'||^2
+        T a2 = a.square_magnitude(); // ||p1'||^2
+        T b2 = b.square_magnitude(); // ||p2'||^2
+        T c2 = c.square_magnitude(); // ||p3'||^2
 
         T term1 = a.x * (b.y * c2 - c.y * b2); // contribution de la coordonnée x de A
         T term2 = - a.y * (b.x * c2 - c.x * b2); // contribution de la coordonnée y de A
@@ -50,8 +50,17 @@ struct Triangle {
 
         return det < epsilon<T>();
     }
-    
+
+
+    bool isInside(Vector2<T> P) {
+        const double abc = 0.5 * abs(p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y));
+
+        const double abp = 0.5 * abs(p1.x * (p2.y - P.y) + p2.x * (P.y - p1.y) + P.x * (p1.y - p2.y));
+        const double bcp = 0.5 * abs(p2.x * (p3.y - P.y) + p3.x * (P.y - p2.y) + P.x * (p2.y - p3.y));
+        const double cap = 0.5 * abs(p3.x * (p1.y - P.y) + p1.x * (P.y - p3.y) + P.x * (p3.y - p1.y));
+
+        //if sum of abp, bcp, cap is equal to abc, then the point is inside the triangle, otherwise it's outside.
+        return std::abs(abc - (abp + bcp + cap)) < epsilon<double>();
+    }
+
 };
-
-
-
