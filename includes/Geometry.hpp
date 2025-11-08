@@ -33,23 +33,24 @@ struct Triangle {
 
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
     bool circumcircleContains(const Vector2<T>& p) {
-    //p become the origin (0,0)
-    Vector2<T> a = {p1.x - p.x, p1.y - p.y};
-    Vector2<T> b = {p2.x - p.x, p2.y - p.y};
-    Vector2<T> c = {p3.x - p.x, p3.y - p.y};
+        //p become the origin (0,0)
+        Vector2<T> a = {p1.x - p.x, p1.y - p.y};
+        Vector2<T> b = {p2.x - p.x, p2.y - p.y};
+        Vector2<T> c = {p3.x - p.x, p3.y - p.y};
 
-    //geometric condition (squared distances from P to each vertex)
-    T a2 = a.square_magnitude(); // ||A'||^2
-    T b2 = b.square_magnitude(); // ||B'||^2
-    T c2 = c.square_magnitude(); // ||C'||^2
+        //geometric condition (squared distances from P to each vertex)
+        T a2 = a.square_magnitude(); // ||A'||^2
+        T b2 = b.square_magnitude(); // ||B'||^2
+        T c2 = c.square_magnitude(); // ||C'||^2
 
-    T term1 = a.x * (b.y * c2 - c.y * b2); // contribution de la coordonnée x de A
-    T term2 = - a.y * (b.x * c2 - c.x * b2); // contribution de la coordonnée y de A
-    T term3 = a2 * b.cross(c); // contribution de la distance au carré de A (z) combinée à B et C // B' × C'
-    T det = term1 + term2 + term3; // La somme (det) nous dit si P est au-dessus ou en dessous du plan → donc à l’intérieur ou à l’extérieur du cercle.
+        T term1 = a.x * (b.y * c2 - c.y * b2); // contribution de la coordonnée x de A
+        T term2 = - a.y * (b.x * c2 - c.x * b2); // contribution de la coordonnée y de A
+        T term3 = a2 * b.cross(c); // contribution de la distance au carré de A (z) combinée à B et C // B' × C'
+        T det = term1 + term2 + term3; // La somme (det) nous dit si P est au-dessus ou en dessous du plan → donc à l’intérieur ou à l’extérieur du cercle.
 
-    return det < epsilon;
-}
+        return det < epsilon<T>();
+    }
+    
 };
 
 
