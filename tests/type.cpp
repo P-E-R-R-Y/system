@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "type.hpp"
+#include "Type.hpp"
 
 // ---------- Vector2 ----------
 TEST(Vector2Test, DefaultInitialization) {

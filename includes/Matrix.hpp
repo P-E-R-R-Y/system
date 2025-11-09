@@ -47,6 +47,7 @@ struct Matrix {
     const T& operator()(std::size_t i, std::size_t j) const { return data[i][j]; }
 
     // Unary operators
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix operator-() const {
         Matrix result{};
         for (std::size_t i = 0; i < ROWS; ++i)
@@ -56,6 +57,7 @@ struct Matrix {
     }
 
     // Arythmetic operator
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix operator+(const Matrix& other) const {
         Matrix result{};
         for (std::size_t i = 0; i < ROWS; ++i)
@@ -64,6 +66,7 @@ struct Matrix {
         return result;
     }
 
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
      Matrix operator-(const Matrix& other) const {
         Matrix result{};
         for (std::size_t i = 0; i < ROWS; ++i)
@@ -73,7 +76,7 @@ struct Matrix {
     }
     
     //
-    template <std::size_t OTHER_COLS>
+    template <std::size_t OTHER_COLS, typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix<T, ROWS, OTHER_COLS> operator*(const Matrix<T, COLS, OTHER_COLS>& other) const {
         Matrix<T, ROWS, OTHER_COLS> result{};
         for (std::size_t i = 0; i < ROWS; ++i)
@@ -84,6 +87,7 @@ struct Matrix {
     }
 
 
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix& operator+=(const Matrix& other) {
         for (std::size_t i = 0; i < ROWS; ++i)
             for (std::size_t j = 0; j < COLS; ++j)
@@ -91,6 +95,7 @@ struct Matrix {
         return *this;
     }
 
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix operator/(T scalar) const {
         Matrix result{};
         for (std::size_t i = 0; i < ROWS; ++i)
@@ -99,6 +104,7 @@ struct Matrix {
         return result;
     }
 
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix& operator*=(T scalar) {
         for (std::size_t i = 0; i < ROWS; ++i)
             for (std::size_t j = 0; j < COLS; ++j)
@@ -106,6 +112,7 @@ struct Matrix {
         return *this;
     }
 
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix& operator/=(T scalar) {
         for (std::size_t i = 0; i < ROWS; ++i)
             for (std::size_t j = 0; j < COLS; ++j)
@@ -113,13 +120,15 @@ struct Matrix {
         return *this;
     }
 
-        Matrix& operator-=(const Matrix& other) {
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
+    Matrix& operator-=(const Matrix& other) {
         for (std::size_t i = 0; i < ROWS; ++i)
             for (std::size_t j = 0; j < COLS; ++j)
                 data[i][j] -= other.data[i][j];
         return *this;
     }
 
+    template <typename = typename std::enable_if<std::is_arithmetic<T>::value && ROWS == COLS>::type>
     Matrix operator*(T scalar) const {
         Matrix result{};
         for (std::size_t i = 0; i < ROWS; ++i)
@@ -137,3 +146,7 @@ struct Matrix {
     }
 
 };
+
+// ---------- Aliases ----------
+using Matrix3x3 = Matrix<double, 3, 3>;
+using Matrix4x4 = Matrix<double, 4, 4>;

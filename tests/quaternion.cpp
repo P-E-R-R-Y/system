@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "Quaternion.hpp"
-#include "constants.hpp"
+#include "Constants.hpp"
 #include <cmath>
 
 TEST(QuaternionTest, DefaultInitialization) {
