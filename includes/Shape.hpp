@@ -88,12 +88,12 @@ struct Triangle {
 
     bool operator==(const Triangle& other) const {
         // Edges are undirected: (A,B,C) == any permutation of (A,B,C)
-        return (same(p1, other.p1) && same(p2, other.p2) && same(p3, other.p3)) ||
-            (same(p1, other.p1) && same(p2, other.p3) && same(p3, other.p2)) ||
-            (same(p1, other.p2) && same(p2, other.p1) && same(p3, other.p3)) ||
-            (same(p1, other.p2) && same(p2, other.p3) && same(p3, other.p1)) ||
-            (same(p1, other.p3) && same(p2, other.p1) && same(p3, other.p2)) ||
-            (same(p1, other.p3) && same(p2, other.p2) && same(p3, other.p1));
+        return ((p1 == other.p1) && (p2 == other.p2) && (p3 == other.p3)) ||
+            ((p1 == other.p1) && (p2 == other.p3) && (p3 == other.p2)) ||
+            ((p1 == other.p2) && (p2 == other.p1) && (p3 == other.p3)) ||
+            ((p1 == other.p2) && (p2 == other.p3) && (p3 == other.p1)) ||
+            ((p1 == other.p3) && (p2 == other.p1) && (p3 == other.p2)) ||
+            ((p1 == other.p3) && (p2 == other.p2) && (p3 == other.p1));
     }
 };
 
