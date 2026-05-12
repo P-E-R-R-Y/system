@@ -45,6 +45,10 @@ struct Line {
     }
 };
 
+using Lineu = Line<std::uint32_t>;
+using Linei = Line<std::int32_t>;
+using Linef = Line<double>;
+
 // Triangle
 template <typename T>
 struct Triangle {
