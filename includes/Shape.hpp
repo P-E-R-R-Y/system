@@ -10,11 +10,29 @@
 #include "Vector2.hpp"
 #include "Constants.hpp"
 
+// Rectangle
 template <typename T>
-struct Rect { 
-    T x, y, w, h;
+struct Rect {
+    T x, y, w, h;   // (x, y) is the centre
+
+    Vector2<T> center() const { return {x, y}; }
+    Vector2<T> half()   const { return {w / T(2), h / T(2)}; }
+
+    // AABB overlap with optional margin.
+    template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
+    bool intersects(const Rect& o, T margin = T(0)) const {
+        return !(x + w / T(2) + margin < o.x - o.w / T(2) ||
+                 x - w / T(2) - margin > o.x + o.w / T(2) ||
+                 y + h / T(2) + margin < o.y - o.h / T(2) ||
+                 y - h / T(2) - margin > o.y + o.h / T(2));
+    }
 };
 
+using Rectu = Rect<std::uint32_t>;
+using Recti = Rect<std::int32_t>;
+using Rectf = Rect<double>;
+
+// Line
 template <typename T>
 struct Line {
     Vector2<T> p1, p2;
@@ -27,11 +45,7 @@ struct Line {
     }
 };
 
-// ---------- Aliases ----------
-using Rectu = Rect<std::uint32_t>;
-using Recti = Rect<std::int32_t>;
-using Rectf = Rect<double>;
-
+// Triangle
 template <typename T>
 struct Triangle {
     Vector2<T> p1, p2, p3;
@@ -70,7 +84,6 @@ struct Triangle {
 
 };
 
-// ---------- Aliases ----------
 using Triangleu = Triangle<std::uint32_t>;
 using Trianglei = Triangle<std::int32_t>;
 using Trianglef = Triangle<double>;
