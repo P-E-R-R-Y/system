@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "Constants.hpp"
 #include <cmath>
 
 template <typename T>
@@ -92,9 +93,15 @@ struct Vector2 {
         y /= len;
     }
 
+    bool same(const T& other) const {
+        return std::abs(x - other.x) < epsilond && std::abs(y - other.y) < epsilond;
+    };
+
 };
 
 // ---------- Aliases ----------
 using Vector2u = Vector2<std::uint32_t>;
 using Vector2i = Vector2<std::int32_t>;
 using Vector2f = Vector2<double>;
+
+

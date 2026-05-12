@@ -43,6 +43,12 @@ struct Line {
         return (p1 == other.p1 && p2 == other.p2) ||
                 (p1 == other.p2 && p2 == other.p1);
     }
+
+    bool same(const Line& other) const {
+        // Edges are undirected: (p1,p2) == (p2,p1)
+        return (p1.same(other.p1) && p2.same(other.p2)) ||
+                (p1.same(other.p2) && p2.same(other.p1));
+    }
 };
 
 using Lineu = Line<std::uint32_t>;
@@ -95,6 +101,17 @@ struct Triangle {
             ((p1 == other.p3) && (p2 == other.p1) && (p3 == other.p2)) ||
             ((p1 == other.p3) && (p2 == other.p2) && (p3 == other.p1));
     }
+
+    bool same(const Triangle& other) const {
+        // Edges are undirected: (A,B) == (B,A)
+        return (p1.same(other.p1) && p2.same(other.p2) && p3.same(other.p3)) ||
+            (p1.same(other.p1) && p2.same(other.p3) && p3.same(other.p2)) ||
+            (p1.same(other.p2) && p2.same(other.p1) && p3.same(other.p3)) ||
+            (p1.same(other.p2) && p2.same(other.p3) && p3.same(other.p1)) ||
+            (p1.same(other.p3) && p2.same(other.p1) && p3.same(other.p2)) ||
+            (p1.same(other.p3) && p2.same(other.p2) && p3.same(other.p1));
+    }
+
 };
 
 using Triangleu = Triangle<std::uint32_t>;
