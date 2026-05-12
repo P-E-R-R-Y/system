@@ -34,10 +34,10 @@ TEST(QuaternionTest, FromAxisAngle) {
     Quaternion q = Quaternion::fromAxisAngle(angle, axis);
     q.normalize();
 
-    EXPECT_NEAR(q.w, std::cos(angle / 2.0f), epsilon());
-    EXPECT_NEAR(q.x, 0.0f, epsilon());
-    EXPECT_NEAR(q.y, 0.0f, epsilon());
-    EXPECT_NEAR(q.z, std::sin(angle / 2.0f), epsilon());
+    EXPECT_NEAR(q.w, std::cos(angle / 2.0f), epsilonf);
+    EXPECT_NEAR(q.x, 0.0f, epsilonf);
+    EXPECT_NEAR(q.y, 0.0f, epsilonf);
+    EXPECT_NEAR(q.z, std::sin(angle / 2.0f), epsilonf);
 }
 
 TEST(QuaternionTest, Normalize) {
@@ -45,10 +45,10 @@ TEST(QuaternionTest, Normalize) {
     q.normalize();
 
     float magnitude = std::sqrt(3*3 + 4*4);
-    EXPECT_NEAR(q.w, 0.0f, epsilon());
-    EXPECT_NEAR(q.x, 3/magnitude, epsilon());
-    EXPECT_NEAR(q.y, 0.0f, epsilon());
-    EXPECT_NEAR(q.z, 4/magnitude, epsilon());
+    EXPECT_NEAR(q.w, 0.0f, epsilonf);
+    EXPECT_NEAR(q.x, 3/magnitude, epsilonf);
+    EXPECT_NEAR(q.y, 0.0f, epsilonf);
+    EXPECT_NEAR(q.z, 4/magnitude, epsilonf);
 }
 
 TEST(QuaternionTest, Conjugate) {
@@ -67,10 +67,10 @@ TEST(QuaternionTest, Multiply) {
 
     Quaternion result = q1 * q2;
 
-    EXPECT_NEAR(result.w, 0.5f, epsilon());
-    EXPECT_NEAR(result.x, 1.25f, epsilon());
-    EXPECT_NEAR(result.y, 1.5f, epsilon());
-    EXPECT_NEAR(result.z, 0.25f, epsilon());
+    EXPECT_NEAR(result.w, 0.5f, epsilonf);
+    EXPECT_NEAR(result.x, 1.25f, epsilonf);
+    EXPECT_NEAR(result.y, 1.5f, epsilonf);
+    EXPECT_NEAR(result.z, 0.25f, epsilonf);
 }
 
 TEST(QuaternionTest, RotateVector90DegAroundZ) {
@@ -78,9 +78,9 @@ TEST(QuaternionTest, RotateVector90DegAroundZ) {
     Vector3f point(1, 0, 0);
 
     Vector3f rotated = q.rotate(point);
-    EXPECT_NEAR(rotated.x, 0.0f, 1e-4f);
-    EXPECT_NEAR(rotated.y, 1.0f, 1e-4f);
-    EXPECT_NEAR(rotated.z, 0.0f, 1e-4f);
+    EXPECT_NEAR(rotated.x, 0.0f, epsilonf);
+    EXPECT_NEAR(rotated.y, 1.0f, epsilonf);
+    EXPECT_NEAR(rotated.z, 0.0f, epsilonf);
 }
 
 TEST(QuaternionTest, FromVectorsParallel) {
@@ -100,6 +100,6 @@ TEST(QuaternionTest, FromVectorsOpposite) {
 
     Quaternion q = Quaternion::fromVectors(v1, v2);
     // For 180° rotation, expect w ≈ 0 and rotation axis perpendicular to v1
-    EXPECT_NEAR(q.w, 0.0f, epsilon());
-    EXPECT_NEAR(std::sqrt(q.x*q.x + q.y*q.y + q.z*q.z), 1.0f, epsilon());
+    EXPECT_NEAR(q.w, 0.0f, epsilonf);
+    EXPECT_NEAR(std::sqrt(q.x*q.x + q.y*q.y + q.z*q.z), 1.0f, epsilonf);
 }

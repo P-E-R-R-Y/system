@@ -6,23 +6,32 @@
  */
 
 #pragma once
-#include <limits>
-#include "type_traits"
 
 namespace {
 
-    template <typename T = float, typename = void>
-    struct Epsilon;
+template<typename T>
+struct Epsilon {};
 
-    template <typename T>
-    struct Epsilon<T, typename std::enable_if<!std::is_floating_point<T>::value>::type> {
-        static float value() { return 1e-5f; }
-    };
+template<>
+struct Epsilon<float> {
+    static constexpr float value = 1e-5f;
+};
 
-    template <> struct Epsilon<float>       { static float value()       { return 1e-5f; } };
-    template <> struct Epsilon<double>      { static double value()      { return 1e-9; } };
-    template <> struct Epsilon<long double> { static long double value() { return 1e-12L; } };
-}
+template<>
+struct Epsilon<double> {
+    static constexpr double value = 1e-9;
+};
 
-template <typename T = float>
-inline T epsilon() { return Epsilon<T>::value(); }
+template<>
+struct Epsilon<long double> {
+    static constexpr long double value = 1e-12L;
+};
+
+template<typename T = float>
+constexpr T epsilon_v = Epsilon<T>::value;
+
+constexpr double epsilonf = epsilon_v<float>;
+constexpr double epsilond = epsilon_v<double>;
+constexpr long double epsilonl = epsilon_v<long double>;
+
+} // anonymous namespace

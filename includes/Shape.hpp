@@ -83,7 +83,7 @@ struct Triangle {
         const double cap = 0.5 * abs(p3.x * (p1.y - P.y) + p1.x * (P.y - p3.y) + P.x * (p3.y - p1.y));
 
         //if sum of abp, bcp, cap is equal to abc, then the point is inside the triangle, otherwise it's outside.
-        return std::abs(abc - (abp + bcp + cap)) < epsilon<double>();
+        return std::abs(abc - (abp + bcp + cap)) < epsilonf;
     }
 
 };
