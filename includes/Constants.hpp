@@ -7,8 +7,6 @@
 
 #pragma once
 
-namespace {
-
 template<typename T>
 struct Epsilon {};
 
@@ -33,5 +31,3 @@ constexpr T epsilon_v = Epsilon<T>::value;
 constexpr double epsilonf = epsilon_v<float>;
 constexpr double epsilond = epsilon_v<double>;
 constexpr long double epsilonl = epsilon_v<long double>;
-
-} // anonymous namespace

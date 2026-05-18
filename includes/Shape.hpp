@@ -77,7 +77,7 @@ struct Triangle {
         T term3 = a2 * b.cross(c); // contribution de la distance au carré de A (z) combinée à B et C // B' × C'
         T det = term1 + term2 + term3; // La somme (det) nous dit si P est au-dessus ou en dessous du plan → donc à l’intérieur ou à l’extérieur du cercle.
 
-        return det < epsilon<T>();
+        return (det < Epsilon<T>::value);
     }
 
 
@@ -89,10 +89,10 @@ struct Triangle {
         const double cap = 0.5 * abs(p3.x * (p1.y - P.y) + p1.x * (P.y - p3.y) + P.x * (p3.y - p1.y));
 
         //if sum of abp, bcp, cap is equal to abc, then the point is inside the triangle, otherwise it's outside.
-        return std::abs(abc - (abp + bcp + cap)) < epsilonf;
+        return std::abs(abc - (abp + bcp + cap)) < Epsilon<T>::value;
     }
 
-    bool operator==(const Triangle& other) const {
+    bool operator==(const Triangle<T>& other) const {
         // Edges are undirected: (A,B,C) == any permutation of (A,B,C)
         return ((p1 == other.p1) && (p2 == other.p2) && (p3 == other.p3)) ||
             ((p1 == other.p1) && (p2 == other.p3) && (p3 == other.p2)) ||
@@ -102,7 +102,7 @@ struct Triangle {
             ((p1 == other.p3) && (p2 == other.p2) && (p3 == other.p1));
     }
 
-    bool same(const Triangle& other) const {
+    bool same(const Triangle<T>& other) const {
         
         // Edges are undirected: (A,B) == (B,A)
         return (p1.same(other.p1) && p2.same(other.p2) && p3.same(other.p3)) ||
