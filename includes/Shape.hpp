@@ -27,7 +27,7 @@ struct Rect {
                  y - h / T(2) - margin > o.y + o.h / T(2));
     }
 };
-
+ 
 using Rectu = Rect<std::uint32_t>;
 using Recti = Rect<std::int32_t>;
 using Rectf = Rect<double>;
@@ -103,6 +103,7 @@ struct Triangle {
     }
 
     bool same(const Triangle& other) const {
+        
         // Edges are undirected: (A,B) == (B,A)
         return (p1.same(other.p1) && p2.same(other.p2) && p3.same(other.p3)) ||
             (p1.same(other.p1) && p2.same(other.p3) && p3.same(other.p2)) ||

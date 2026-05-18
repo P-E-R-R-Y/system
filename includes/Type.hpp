@@ -33,5 +33,7 @@
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
+// ---------- Lambda ----------
 
+#include "Lambdify.hpp"
 
