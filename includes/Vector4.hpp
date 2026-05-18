@@ -84,6 +84,13 @@ struct Vector4 {
         z /= len;
     }
 
+    template<typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
+    bool same(const Vector4& other, T epsilon = epsilon_v<T>) const {
+        return std::abs(w - other.w) < epsilon &&
+               std::abs(x - other.x) < epsilon &&
+               std::abs(y - other.y) < epsilon &&
+               std::abs(z - other.z) < epsilon;
+    }
 };
 
 using Vector4u = Vector4<std::uint32_t>;

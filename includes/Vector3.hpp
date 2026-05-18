@@ -100,6 +100,12 @@ struct Vector3 {
         z /= len;
     }
 
+    template<typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
+    bool same(const Vector3& other, T epsilon = epsilon_v<T>) const {
+        return std::abs(x - other.x) < epsilon &&
+               std::abs(y - other.y) < epsilon &&
+               std::abs(z - other.z) < epsilon;
+    }
 };
 
 using Vector3u = Vector3<std::uint32_t>;

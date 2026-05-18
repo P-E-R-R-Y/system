@@ -26,7 +26,22 @@ TEST(Vector3Test, DefaultInitialization) {
     EXPECT_DOUBLE_EQ(v.z, 0.0);
 }
 
+TEST(Vector3Test, Assignment) {
+    Vector3i v{1, 2, 3};
+    EXPECT_EQ(v.x, 1);
+    EXPECT_EQ(v.y, 2);
+    EXPECT_EQ(v.z, 3);
+}
+
 // ---------- Vector4 ----------
+TEST(Vector4Test, DefaultInitialization) {
+    Vector4f v{};
+    EXPECT_DOUBLE_EQ(v.x, 0.0);
+    EXPECT_DOUBLE_EQ(v.y, 0.0);
+    EXPECT_DOUBLE_EQ(v.z, 0.0);
+    EXPECT_DOUBLE_EQ(v.w, 0.0);
+}
+
 TEST(Vector4Test, Assignment) {
     Vector4i v{1,2,3,4};
     EXPECT_EQ(v.w, 1);
