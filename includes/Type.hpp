@@ -16,6 +16,10 @@
     #define OS "linux"
 #endif
 
+// ---------- Standard Library ----------
+
+#include "std.hpp"
+
 // ---------- Vectors ----------
 #include "Color.hpp"
 #include "Constants.hpp"
@@ -26,8 +30,6 @@
 #include "Quaternion.hpp"
 
 #include "Shape.hpp"
-
-#include "std.hpp"
 
 #include "Vector2.hpp"
 #include "Vector3.hpp"
