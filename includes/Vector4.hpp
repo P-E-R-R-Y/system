@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cmath>
+#include "Constants.hpp"
 
 template <typename T>
 struct Vector4 {
@@ -84,7 +85,7 @@ struct Vector4 {
         z /= len;
     }
 
-    template<typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
+    template<typename U = T, typename = typename std::enable_if<std::is_floating_point<U>::value>::type>
     bool same(const Vector4& other, T epsilon = epsilon_v<T>) const {
         return std::abs(w - other.w) < epsilon &&
                std::abs(x - other.x) < epsilon &&

@@ -93,7 +93,7 @@ struct Vector2 {
         y /= len;
     }
 
-    template<typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
+    template<typename U = T, typename = typename std::enable_if<std::is_floating_point<U>::value>::type>
     bool same(const Vector2& other, T epsilon = epsilon_v<T>) const {
         return std::abs(x - other.x) < epsilon &&
                std::abs(y - other.y) < epsilon;
