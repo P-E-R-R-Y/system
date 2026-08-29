@@ -1,0 +1,8 @@
+/**
+ * @defgroup system system
+ *
+ * @brief The vocabulary types everything else shares.
+ *
+ * Vector2/3/4, Matrix, Quaternion, Color, Shape, plus the platform
+ * constants. No dependency, nothing to link.
+ */

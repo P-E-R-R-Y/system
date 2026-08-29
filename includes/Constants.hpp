@@ -3,6 +3,9 @@
  * @author Perry Chouteau (perry.chouteau@outlook.com)
  * @brief 
  * @date 2025-11-05
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -31,3 +34,5 @@ constexpr T epsilon_v = Epsilon<T>::value;
 constexpr double epsilonf = epsilon_v<float>;
 constexpr double epsilond = epsilon_v<double>;
 constexpr long double epsilonl = epsilon_v<long double>;
+/** @} */
+

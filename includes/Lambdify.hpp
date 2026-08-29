@@ -1,3 +1,10 @@
+/**
+ * @file Lambdify.hpp
+ *
+ * @addtogroup system
+ * @{
+ */
+
 // Lambdify.hpp
 /**
  * @file Lambdify.hpp
@@ -33,3 +40,5 @@ struct lambdify {
 // Helper alias
 template<auto Func>
 using lambdify_t = typename lambdify<Func>::type;
+/** @} */
+

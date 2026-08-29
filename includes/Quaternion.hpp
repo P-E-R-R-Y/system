@@ -3,6 +3,9 @@
  * @author Perry Chouteau (perry.chouteau@outlook.com)
  * @brief 
  * @date 2025-11-06
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -145,3 +148,5 @@ class Quaternion {
 
     float w, x, y, z;
 };
+/** @} */
+

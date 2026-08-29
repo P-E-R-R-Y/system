@@ -3,6 +3,9 @@
  * @author Perry Chouteau (perry.chouteau@outlook.com)
  * @brief 
  * @date 2025-11-05
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -11,20 +14,40 @@
 #include "Constants.hpp"
 
 // Rectangle
+//
+// (x, y) is the TOP-LEFT corner, w/h the size.
+//
+// This used to be documented as the centre, and every use in the codebase
+// contradicted it. ISprite::setCrop() and ISprite::getBounds() are the only
+// two places a Rect actually travels through, and all four vendors read a
+// corner : sfml hands x/y straight to sf::IntRect's position, raylib to a
+// raylib Rectangle, both SDL to an SDL_Rect. getBounds() likewise returns
+// the sprite's position, which is its corner.
+//
+// So the code was right and the comment was wrong. Fixing the comment
+// rather than the four vendors is the only choice that changes no
+// behaviour - and centre semantics would have needed a decision the
+// drawing APIs never offered in the first place.
 template <typename T>
 struct Rect {
-    T x, y, w, h;   // (x, y) is the centre
+    T x, y, w, h;
 
-    Vector2<T> center() const { return {x, y}; }
+    // Derived, not stored : the corner is what a drawing API asks for, the
+    // centre is what a hit test asks for, and only one of them can be the
+    // field without lying to the other.
+    Vector2<T> center() const { return {x + w / T(2), y + h / T(2)}; }
     Vector2<T> half()   const { return {w / T(2), h / T(2)}; }
 
-    // AABB overlap with optional margin.
+    Vector2<T> corner() const { return {x, y}; }
+    Vector2<T> size()   const { return {w, h}; }
+
+    // AABB overlap with optional margin. Corner semantics, like the fields.
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
     bool intersects(const Rect& o, T margin = T(0)) const {
-        return !(x + w / T(2) + margin < o.x - o.w / T(2) ||
-                 x - w / T(2) - margin > o.x + o.w / T(2) ||
-                 y + h / T(2) + margin < o.y - o.h / T(2) ||
-                 y - h / T(2) - margin > o.y + o.h / T(2));
+        return !(x + w + margin < o.x ||
+                 x - margin > o.x + o.w ||
+                 y + h + margin < o.y ||
+                 y - margin > o.y + o.h);
     }
 };
  
@@ -118,3 +141,5 @@ struct Triangle {
 using Triangleu = Triangle<std::uint32_t>;
 using Trianglei = Triangle<std::int32_t>;
 using Trianglef = Triangle<double>;
+/** @} */
+

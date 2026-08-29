@@ -3,6 +3,9 @@
  * @author Perry Chouteau (perry.chouteau@outlook.com)
  * @brief 
  * @date 2025-11-04
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -112,3 +115,5 @@ struct Vector3 {
 using Vector3u = Vector3<std::uint32_t>;
 using Vector3i = Vector3<std::int32_t>;
 using Vector3f = Vector3<double>;
+/** @} */
+

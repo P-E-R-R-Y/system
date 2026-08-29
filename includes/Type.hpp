@@ -4,6 +4,9 @@
  * @brief Define common math and utility types
  * @version 0.3
  * @date 2025-02-19
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -14,6 +17,7 @@
     #define OS "macos"
 #else
     #define OS "linux"
+
 #endif
 
 // ---------- Standard Library ----------
@@ -39,3 +43,4 @@
 
 #include "Lambdify.hpp"
 
+/** @} */

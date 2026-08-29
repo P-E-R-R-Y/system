@@ -3,6 +3,9 @@
  * @author Perry Chouteau (perry.chouteau@outlook.com)
  * @brief 
  * @date 2026-05-18
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -15,3 +18,5 @@ namespace std {  // Open the std namespace (this is generally discouraged)
         return os << '\t';
     }
 }
+/** @} */
+

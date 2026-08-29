@@ -3,6 +3,9 @@
  * @author Perry Chouteau (perry.chouteau@outlook.com)
  * @brief 
  * @date 2025-11-04
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -105,4 +108,6 @@ using Vector2u = Vector2<std::uint32_t>;
 using Vector2i = Vector2<std::int32_t>;
 using Vector2f = Vector2<double>;
 
+
+/** @} */
 

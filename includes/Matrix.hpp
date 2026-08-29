@@ -3,6 +3,9 @@
  * @author Perry Chouteau (perry.chouteau@outlook.com)
  * @brief 
  * @date 2025-11-04
+ *
+ * @addtogroup system
+ * @{
  */
 
 #pragma once
@@ -149,4 +152,5 @@ struct Matrix {
 
 // ---------- Aliases ----------
 using Matrix3x3 = Matrix<double, 3, 3>;
-using Matrix4x4 = Matrix<double, 4, 4>;
+using Matrix4x4 = Matrix<double, 4, 4>;/** @} */
+
