@@ -1,18 +1,18 @@
-# system — journal
+# system — changelog
 
-Marqueurs : 🟢 ajout · 🔴 rupture · 🔵 correctif · ⚪ interne ou doc · 🟡 propose
-dans le plan, code non ecrit.
+Markers: 🟢 added · 🔴 breaking · 🔵 fix · ⚪ internal or docs · 🟡 proposed
+in the plan, no code written yet.
 
 ## v1.0.0
 
 - 🟢 `Vector2/3/4`, `Matrix`, `Quaternion`, `Color`, `Constants`, `Lambdify`
-- 🟢 `Rect` a semantique **coin** : `(x, y)` est le coin haut-gauche
+- 🟢 `Rect` with **corner** semantics: `(x, y)` is the top-left corner
 - 🟢 28 tests
 
-### Constate, pas corrige
+### Known, not fixed
 
-- `Type.hpp` est un en-tete parapluie qui tire tout : `igraphic` n'inclut
-  que lui, huit fois, et paie `Vector4`, `Matrix` et `Quaternion` sans
-  s'en servir
-- declare `STATIC` sans aucune source : produit un `.a` vide, devrait
-  etre `INTERFACE`
+- `Type.hpp` is an umbrella header that pulls everything in — `igraphic`
+  only ever includes it, eight times, and pays for `Vector4`, `Matrix`
+  and `Quaternion` it never uses
+- declared `STATIC` with no sources: produces an empty `.a`, should be
+  `INTERFACE`
