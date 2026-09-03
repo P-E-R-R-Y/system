@@ -1,0 +1,25 @@
+var structVector4 =
+[
+    [ "distance", "structVector4.html#a7b6b929abdfc143eaf1f7608f24c7867", null ],
+    [ "dot", "structVector4.html#a56f8ae5265c03b5e10723f83c30b43a4", null ],
+    [ "magnitude", "structVector4.html#a4d540205ea27bc36ef6661389a4aa871", null ],
+    [ "normalize", "structVector4.html#a692f6abc6242fe9261bc009c64299aa8", null ],
+    [ "normalized", "structVector4.html#a90885a60e0947a5f05cf7cc782b416d5", null ],
+    [ "operator!=", "structVector4.html#a5318c04f12d0fd5b223440f4678e44c8", null ],
+    [ "operator*", "structVector4.html#a3c834dafb04c2e39a1081f57d96e4811", null ],
+    [ "operator*=", "structVector4.html#a5dc355a8b467b66d74ab7ac4b53ea141", null ],
+    [ "operator+", "structVector4.html#af81c514f5b9a7a5fdaef4fc1db6d6c93", null ],
+    [ "operator+=", "structVector4.html#aac773361f2488b9d9c95618a98cf5436", null ],
+    [ "operator-", "structVector4.html#a711ab3e0c0fd349ba592f8f45a48152a", null ],
+    [ "operator-", "structVector4.html#a00f9a178ed8880f92f3dd2488a10f141", null ],
+    [ "operator-=", "structVector4.html#a08361881d6f749f7ec6e77de22524e81", null ],
+    [ "operator/", "structVector4.html#ab3fa4d628dcd485c119fbb697bfffe35", null ],
+    [ "operator/=", "structVector4.html#a384b98d984352e5bb488b95a9a183293", null ],
+    [ "operator==", "structVector4.html#a8c26dc22ec3d134c014759cd7a7c4c01", null ],
+    [ "same", "structVector4.html#aac90fccd935793cde000644d509a3714", null ],
+    [ "square_magnitude", "structVector4.html#aa497996e31215a840d52f6939b6468c5", null ],
+    [ "w", "structVector4.html#a83daff43fa2b88b4e76474f4b9a45276", null ],
+    [ "x", "structVector4.html#a2cedf20d2f695a4f0254681b13311ac9", null ],
+    [ "y", "structVector4.html#aad001ba27515dc2dcb921e9c83596520", null ],
+    [ "z", "structVector4.html#a5a7a1452d661e0b24e4b04c4dbff8ae7", null ]
+];
