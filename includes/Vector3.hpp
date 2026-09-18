@@ -11,6 +11,9 @@
 #pragma once
 
 #include <cmath>
+#include <cstdint>
+#include <type_traits>
+
 #include "Constants.hpp"
 
 template <typename T>
@@ -52,7 +55,7 @@ struct Vector3 {
 
     // Unary Operators
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
-    Vector3 operator-() { return Vector3{-x, -y, -z}; }
+    Vector3 operator-() const { return Vector3{-x, -y, -z}; }
 
     //methods    
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
@@ -80,10 +83,11 @@ struct Vector3 {
 
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
     double angle(const Vector3& other) const {
-        double dot = double(this->dot(other));
-        double cross = double(this->cross(other));
+        //en 3D l'angle est toujours positif : le produit vectoriel donne une
+        //norme, pas un signe. Un signe demanderait un axe de reference.
+        const double sine = double(this->cross(other).magnitude());
 
-        return std::atan2(cross, dot); // result in radians, can be negative
+        return std::atan2(sine, double(this->dot(other)));   //radians, [0, pi]
     }
 
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>

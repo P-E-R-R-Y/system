@@ -1,7 +1,7 @@
 /**
  * @file Quaternion.hpp
  * @author Perry Chouteau (perry.chouteau@outlook.com)
- * @brief 
+ * @brief Une rotation, sans blocage de cardan.
  * @date 2025-11-06
  *
  * @addtogroup system
@@ -12,20 +12,25 @@
 
 #include "Vector3.hpp"
 
+/**
+ * @class Quaternion
+ * @brief Une rotation dans l'espace, parametree par son scalaire.
+ *
+ * Templatee comme Vector3 et Matrix : le quaternion et le vecteur qu'il
+ * tourne partagent le meme T, donc rotate() ne retrecit jamais son point.
+ */
+template <typename T>
 class Quaternion {
+
     public:
-        Quaternion(): w(1), x(0), y(0), z(0) {}
-        
-        Quaternion(float w, float x, float y, float z) : w(w), x(x), y(y), z(z) {}
-        ~Quaternion() {}
+        Quaternion() : w(1), x(0), y(0), z(0) {}
+        Quaternion(T w, T x, T y, T z) : w(w), x(x), y(y), z(z) {}
 
-        static Quaternion identity() {
-            return Quaternion(1, 0, 0, 0);
-        }
+        static Quaternion identity() { return Quaternion(1, 0, 0, 0); }
 
-        static Quaternion fromEulerAngles(float x, float y, float z) {
+        static Quaternion fromEulerAngles(T x, T y, T z) {
             Quaternion q;
-            Vector3f half = {x / 2, y / 2, z / 2};
+            const Vector3<T> half = {x / 2, y / 2, z / 2};
 
             q.w = std::cos(half.x) * std::cos(half.y) * std::cos(half.z) + std::sin(half.x) * std::sin(half.y) * std::sin(half.z);
             q.x = std::sin(half.x) * std::cos(half.y) * std::cos(half.z) - std::cos(half.x) * std::sin(half.y) * std::sin(half.z);
@@ -35,15 +40,14 @@ class Quaternion {
         }
 
         /**
-         * @brief fromAxisAngle will create a quaternion from an axis and an angle
-         * 
-         * @param angle 
-         * @param axis 
-         * @return Quaternion 
+         * @brief Une rotation d'un angle autour d'un axe.
+         *
+         * @param angle en radians
+         * @param axis  suppose unitaire
          */
-        static Quaternion fromAxisAngle(float angle, Vector3f axis) {
+        static Quaternion fromAxisAngle(T angle, Vector3<T> axis) {
             Quaternion q;
-            float half = angle / 2; 
+            const T half = angle / 2;
 
             q.w = std::cos(half);
             q.x = axis.x * std::sin(half);
@@ -53,100 +57,90 @@ class Quaternion {
         }
 
         /**
-         * @brief quaterninon representing the rotation from one vector to another
-         * 
-         * @param v1
-         * @param v2
-         * @return Quaternion
+         * @brief La rotation qui amene v1 sur v2.
          */
-        static Quaternion fromVectors(const Vector3f& v1, const Vector3f& v2, const Vector3f referenceUp = {0.0f, 1.0f, 0.0f}) {
-            //!NEW
-            // Normalize the vectors
-            Vector3f u1 = v1.normalized();
-            Vector3f u2 = v2.normalized();
+        static Quaternion fromVectors(const Vector3<T> &v1, const Vector3<T> &v2,
+                                      const Vector3<T> referenceUp = {0, 1, 0}) {
+            (void)referenceUp;
 
-            float dot = u1.dot(u2);
+            const Vector3<T> u1 = v1.normalized();
+            const Vector3<T> u2 = v2.normalized();
+            const T dot = u1.dot(u2);
 
-            //todo: check if this check is indeed working well with 180° rotation
-            if (dot > 0.999999) {
+            //todo: check if this check is indeed working well with 180 rotation
+            if (dot > T(0.999999))
                 return Quaternion(1, 0, 0, 0);
-            } else if (dot < -0.999999) {
-                Vector3f axis = Vector3f{1, 0, 0}.cross(u1);
-                if (axis.x == 0 && axis.y == 0 && axis.z == 0) {
-                    axis = Vector3f{0, 1, 0}.cross(u1);
-                }
-                return Quaternion(0, axis.x, axis.y, axis.z);
+
+            if (dot < T(-0.999999)) {
+                Vector3<T> axis = Vector3<T>{1, 0, 0}.cross(u1);
+
+                if (axis.x == 0 && axis.y == 0 && axis.z == 0)
+                    axis = Vector3<T>{0, 1, 0}.cross(u1);
+
+                Quaternion q(0, axis.x, axis.y, axis.z);
+
+                q.normalize();
+                return q;
             }
 
-            Vector3f axis = u1.cross(u2);
-            float u1Length = sqrt(u1.x * u1.x + u1.y * u1.y + u1.z * u1.z);
-            float u2Length = sqrt(u2.x * u2.x + u2.y * u2.y + u2.z * u2.z);
-
-            float w = sqrt((u1Length * u1Length) * (u2Length * u2Length)) + dot;
+            const Vector3<T> axis = u1.cross(u2);
+            const T u1Length = u1.magnitude();
+            const T u2Length = u2.magnitude();
+            const T w = std::sqrt((u1Length * u1Length) * (u2Length * u2Length)) + dot;
             Quaternion q(w, axis.x, axis.y, axis.z);
+
+            /* La construction rend un quaternion de norme quelconque. Non
+             * normalise, rotate() mettrait le point a l'echelle |q|^2. */
+            q.normalize();
             return q;
         }
 
-        Quaternion conjugate() const {
-            return Quaternion(w, -x, -y, -z);
-        }
+        Quaternion conjugate() const { return Quaternion(w, -x, -y, -z); }
 
+        /** @brief Le ramene sur la sphere unite. Un quaternion nul devient l'identite. */
         void normalize() {
-            float magnitude = std::sqrt(w * w + x * x + y * y + z * z);
+            const T magnitude = std::sqrt(w * w + x * x + y * y + z * z);
+
             if (magnitude == 0) {
-                w = 1;
-                x = 0;
-                y = 0;
-                z = 0;
-            } else {
-                w /= magnitude;
-                x /= magnitude;
-                y /= magnitude;
-                z /= magnitude;
+                w = 1; x = 0; y = 0; z = 0;
+                return;
             }
+            w /= magnitude; x /= magnitude; y /= magnitude; z /= magnitude;
         }
 
-        void normalise() {
-            float magnitude = std::sqrt(w * w + x * x + y * y + z * z);
-            if (magnitude == 0) {
-                w = 1;
-                x = 0;
-                y = 0;
-                z = 0;
-            } else {
-                w /= magnitude;
-                x /= magnitude;
-                y /= magnitude;
-                z /= magnitude;
-            }
-        }
-
+        /**
+         * @brief Choisit la representation a w positif.
+         *
+         * q et -q designent la MEME rotation. Fixer le signe rend deux
+         * orientations comparables composante par composante.
+         */
         void enforceSign() {
             if (w < 0) {
-                w = -w;
-                x = -x;
-                y = -y;
-                z = -z;
+                w = -w; x = -x; y = -y; z = -z;
             }
         }
 
-        Vector3f rotate(Vector3f point, Vector3f center = {0, 0, 0}) const {
-            Quaternion p(0, point.x - center.x, point.y - center.y, point.z - center.z);
-            Quaternion q = (*this * p) * conjugate();
+        /** @brief Tourne un point autour d'un centre. */
+        Vector3<T> rotate(Vector3<T> point, Vector3<T> center = {0, 0, 0}) const {
+            const Quaternion p(0, point.x - center.x, point.y - center.y, point.z - center.z);
+            const Quaternion q = (*this * p) * conjugate();
+
             return {q.x + center.x, q.y + center.y, q.z + center.z};
         }
 
-        Quaternion operator*(const Quaternion& other) const {
-            Quaternion q(
+        /** @brief Compose deux rotations. L'ordre compte. */
+        Quaternion operator*(const Quaternion &other) const {
+            return Quaternion(
                 w * other.w - x * other.x - y * other.y - z * other.z,
                 w * other.x + x * other.w + y * other.z - z * other.y,
                 w * other.y - x * other.z + y * other.w + z * other.x,
                 w * other.z + x * other.y - y * other.x + z * other.w
             );
-            return q;
         }
 
-    float w, x, y, z;
+        T w, x, y, z;
 };
-/** @} */
 
+using Quaternionf = Quaternion<double>;
+
+/** @} */

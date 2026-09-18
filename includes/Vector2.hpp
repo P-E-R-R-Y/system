@@ -10,8 +10,11 @@
 
 #pragma once
 
-#include "Constants.hpp"
 #include <cmath>
+#include <cstdint>
+#include <type_traits>
+
+#include "Constants.hpp"
 
 template <typename T>
 struct Vector2 {
@@ -52,7 +55,7 @@ struct Vector2 {
 
     // Unary Operators
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
-    Vector2 operator-() { return Vector2{-x, -y}; }
+    Vector2 operator-() const { return Vector2{-x, -y}; }
 
     //methods    
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>

@@ -4,7 +4,7 @@
 #include <cmath>
 
 TEST(QuaternionTest, DefaultInitialization) {
-    Quaternion q;
+    Quaternionf q;
     EXPECT_FLOAT_EQ(q.w, 1.0f);
     EXPECT_FLOAT_EQ(q.x, 0.0f);
     EXPECT_FLOAT_EQ(q.y, 0.0f);
@@ -12,7 +12,7 @@ TEST(QuaternionTest, DefaultInitialization) {
 }
 
 TEST(QuaternionTest, CustomInitialization) {
-    Quaternion q(0.5f, 1.0f, 2.0f, 3.0f);
+    Quaternionf q(0.5f, 1.0f, 2.0f, 3.0f);
     EXPECT_FLOAT_EQ(q.w, 0.5f);
     EXPECT_FLOAT_EQ(q.x, 1.0f);
     EXPECT_FLOAT_EQ(q.y, 2.0f);
@@ -20,7 +20,7 @@ TEST(QuaternionTest, CustomInitialization) {
 }
 
 TEST(QuaternionTest, IdentityQuaternion) {
-    Quaternion q = Quaternion::identity();
+    Quaternionf q = Quaternionf::identity();
     EXPECT_FLOAT_EQ(q.w, 1.0f);
     EXPECT_FLOAT_EQ(q.x, 0.0f);
     EXPECT_FLOAT_EQ(q.y, 0.0f);
@@ -31,7 +31,7 @@ TEST(QuaternionTest, FromAxisAngle) {
     Vector3f axis{0, 0, 1};
     float angle = static_cast<float>(M_PI) / 2.0f;  // 90 degrees
 
-    Quaternion q = Quaternion::fromAxisAngle(angle, axis);
+    Quaternionf q = Quaternionf::fromAxisAngle(angle, axis);
     q.normalize();
 
     EXPECT_NEAR(q.w, std::cos(angle / 2.0f), epsilonf);
@@ -41,7 +41,7 @@ TEST(QuaternionTest, FromAxisAngle) {
 }
 
 TEST(QuaternionTest, Normalize) {
-    Quaternion q(0, 3, 0, 4);
+    Quaternionf q(0, 3, 0, 4);
     q.normalize();
 
     float magnitude = std::sqrt(3*3 + 4*4);
@@ -52,8 +52,8 @@ TEST(QuaternionTest, Normalize) {
 }
 
 TEST(QuaternionTest, Conjugate) {
-    Quaternion q(1, 2, 3, 4);
-    Quaternion c = q.conjugate();
+    Quaternionf q(1, 2, 3, 4);
+    Quaternionf c = q.conjugate();
 
     EXPECT_FLOAT_EQ(c.w, 1.0f);
     EXPECT_FLOAT_EQ(c.x, -2.0f);
@@ -62,10 +62,10 @@ TEST(QuaternionTest, Conjugate) {
 }
 
 TEST(QuaternionTest, Multiply) {
-    Quaternion q1(1, 0, 1, 0);
-    Quaternion q2(1, 0.5f, 0.5f, 0.75f);
+    Quaternionf q1(1, 0, 1, 0);
+    Quaternionf q2(1, 0.5f, 0.5f, 0.75f);
 
-    Quaternion result = q1 * q2;
+    Quaternionf result = q1 * q2;
 
     EXPECT_NEAR(result.w, 0.5f, epsilonf);
     EXPECT_NEAR(result.x, 1.25f, epsilonf);
@@ -74,7 +74,7 @@ TEST(QuaternionTest, Multiply) {
 }
 
 TEST(QuaternionTest, RotateVector90DegAroundZ) {
-    Quaternion q = Quaternion::fromAxisAngle(static_cast<float>(M_PI) / 2.0f, {0, 0, 1});
+    Quaternionf q = Quaternionf::fromAxisAngle(static_cast<float>(M_PI) / 2.0f, {0, 0, 1});
     Vector3f point(1, 0, 0);
 
     Vector3f rotated = q.rotate(point);
@@ -87,7 +87,7 @@ TEST(QuaternionTest, FromVectorsParallel) {
     Vector3f v1(1, 0, 0);
     Vector3f v2(1, 0, 0);
 
-    Quaternion q = Quaternion::fromVectors(v1, v2);
+    Quaternionf q = Quaternionf::fromVectors(v1, v2);
     EXPECT_FLOAT_EQ(q.w, 1.0f);
     EXPECT_FLOAT_EQ(q.x, 0.0f);
     EXPECT_FLOAT_EQ(q.y, 0.0f);
@@ -98,7 +98,7 @@ TEST(QuaternionTest, FromVectorsOpposite) {
     Vector3f v1(1, 0, 0);
     Vector3f v2(-1, 0, 0);
 
-    Quaternion q = Quaternion::fromVectors(v1, v2);
+    Quaternionf q = Quaternionf::fromVectors(v1, v2);
     // For 180° rotation, expect w ≈ 0 and rotation axis perpendicular to v1
     EXPECT_NEAR(q.w, 0.0f, epsilonf);
     EXPECT_NEAR(std::sqrt(q.x*q.x + q.y*q.y + q.z*q.z), 1.0f, epsilonf);

@@ -11,6 +11,9 @@
 #pragma once
 
 #include <cmath>
+#include <cstdint>
+#include <type_traits>
+
 #include "Constants.hpp"
 
 template <typename T>
@@ -52,7 +55,7 @@ struct Vector4 {
 
     // Unary Operators
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
-    Vector4 operator-() { return Vector4{-w, -x, -y, -z}; }
+    Vector4 operator-() const { return Vector4{-w, -x, -y, -z}; }
 
     //methods
     template<typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>

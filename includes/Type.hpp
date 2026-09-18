@@ -20,17 +20,14 @@
 
 #endif
 
-// ---------- Standard Library ----------
-
-#include "std.hpp"
-
-// ---------- Vectors ----------
 #include "Color.hpp"
+
 #include "Constants.hpp"
+
+#include "Lambdify.hpp"
 
 #include "Matrix.hpp"
 
-#include "Quaternion.hpp"
 #include "Quaternion.hpp"
 
 #include "Shape.hpp"
@@ -38,9 +35,5 @@
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
-
-// ---------- Lambda ----------
-
-#include "Lambdify.hpp"
 
 /** @} */
