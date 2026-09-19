@@ -3,6 +3,10 @@
 Markers: 🟢 added · 🔴 breaking · 🔵 fix · ⚪ internal or docs · 🟡 proposed
 in the plan, no code written yet.
 
+## v1.0.1
+
+- templated `Quaternion` +  `Quaternionf`
+
 ## v1.0.0
 
 - 🟢 `Vector2/3/4`, `Matrix`, `Quaternion`, `Color`, `Constants`, `Lambdify`
